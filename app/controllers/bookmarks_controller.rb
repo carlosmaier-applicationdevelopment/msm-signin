@@ -1,6 +1,6 @@
 class BookmarksController < ApplicationController
   def index
-    matching_bookmarks = Bookmark.all
+    matching_bookmarks = Bookmark.all.where({user_id: session[:user_id]})
 
     @list_of_bookmarks = matching_bookmarks.order({ :created_at => :desc })
 
@@ -34,7 +34,7 @@ class BookmarksController < ApplicationController
     the_id = params.fetch("path_id")
     the_bookmark = Bookmark.where({ :id => the_id }).at(0)
 
-    the_bookmark.user_id = params.fetch("query_user_id")
+    the_bookmark.user_id = session.fetch(:user_id)
     the_bookmark.movie_id = params.fetch("query_movie_id")
 
     if the_bookmark.valid?

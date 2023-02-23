@@ -1,4 +1,9 @@
 class MoviesController < ApplicationController
+
+  def home
+    render({ :template => "homepage.html.erb" })
+  end
+
   def index
     matching_movies = Movie.all
 
